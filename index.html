@@ -5,11 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional SVG Drawing Tool | Priyanshu Gupta</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+        
+        :root {
+            --spacing-unit: 8px;
+            --spacing-xs: calc(var(--spacing-unit) * 0.5); /* 4px */
+            --spacing-sm: calc(var(--spacing-unit) * 1);   /* 8px */
+            --spacing-md: calc(var(--spacing-unit) * 2);   /* 16px */
+            --spacing-lg: calc(var(--spacing-unit) * 3);   /* 24px */
+            --spacing-xl: calc(var(--spacing-unit) * 4);   /* 32px */
+            --spacing-xxl: calc(var(--spacing-unit) * 5);  /* 40px */
         }
         
         body {
@@ -19,7 +30,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: var(--spacing-md);
             color: #333;
         }
         
@@ -37,14 +48,14 @@
         header {
             background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
             color: white;
-            padding: 20px;
+            padding: var(--spacing-xl);
             text-align: center;
             position: relative;
         }
         
         h1 {
             font-size: 2.2rem;
-            margin-bottom: 10px;
+            margin-bottom: var(--spacing-sm);
         }
         
         .subtitle {
@@ -54,11 +65,11 @@
         
         .designer-name {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
             font-size: 1.1rem;
             background: rgba(255, 255, 255, 0.2);
-            padding: 8px 15px;
+            padding: var(--spacing-sm) var(--spacing-md);
             border-radius: 20px;
             font-weight: 500;
         }
@@ -70,12 +81,12 @@
         
         .toolbar {
             width: 280px;
-            padding: 20px;
+            padding: var(--spacing-lg);
             background-color: #f8f9fa;
             border-right: 1px solid #e9ecef;
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: var(--spacing-xl);
             overflow-y: auto;
         }
         
@@ -83,18 +94,18 @@
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            padding: 15px;
+            padding: var(--spacing-lg);
         }
         
         .tool-group h3 {
             font-size: 1rem;
             color: #495057;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
             border-bottom: 1px solid #e9ecef;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: var(--spacing-sm);
         }
         
         .tool-group h3 i {
@@ -104,11 +115,11 @@
         .shape-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: var(--spacing-sm);
         }
         
         .shape-btn {
-            padding: 12px 5px;
+            padding: var(--spacing-sm) var(--spacing-xs);
             background-color: #f1f3f5;
             border: 2px solid #dee2e6;
             border-radius: 6px;
@@ -118,7 +129,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: var(--spacing-xs);
         }
         
         .shape-btn:hover {
@@ -143,7 +154,7 @@
         .color-picker {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: var(--spacing-md);
         }
         
         .color-item {
@@ -175,11 +186,11 @@
             font-size: 0.9rem;
             color: #6c757d;
             text-align: center;
-            margin-top: 5px;
+            margin-top: var(--spacing-xs);
         }
         
         .action-btn {
-            padding: 12px 15px;
+            padding: var(--spacing-sm) var(--spacing-md);
             background-color: #4b6cb7;
             color: white;
             border: none;
@@ -189,9 +200,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: var(--spacing-sm);
             width: 100%;
-            margin-bottom: 10px;
+            margin-bottom: var(--spacing-sm);
         }
         
         .action-btn:hover {
@@ -206,15 +217,16 @@
             background-color: #bd2130;
         }
         
-        .drawing-container {
-            flex: 1;
+        .drawing-section {
+            flex:1;
             display: flex;
+            height: 1000px;
             flex-direction: column;
             position: relative;
         }
         
         .drawing-header {
-            padding: 15px 20px;
+            padding: var(--spacing-md) var(--spacing-lg);
             background-color: #f8f9fa;
             border-bottom: 1px solid #e9ecef;
             display: flex;
@@ -227,15 +239,28 @@
             color: #6c757d;
         }
         
+        .drawing-area-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: var(--spacing-lg);
+            gap: var(--spacing-md);
+            background-color: #f8f9fa;
+        }
+        
         .drawing-area {
             flex: 1;
             position: relative;
             overflow: hidden;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            height: 100vh; /* Increased drawing area height */
         }
         
         #svg-canvas {
             width: 100%;
-            height: 100%;
+            height: 400px;
             background-color: white;
             cursor: crosshair;
         }
@@ -250,54 +275,55 @@
             background-image: 
                 linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
+            background-size: var(--spacing-unit) var(--spacing-unit); /* 8px grid */
         }
         
         .instructions {
-            padding: 20px;
+            padding: var(--spacing-lg);
             background-color: #f8f9fa;
             border-top: 1px solid #e9ecef;
         }
         
         .instructions h3 {
-            margin-bottom: 10px;
+            margin-bottom: var(--spacing-md);
             color: #495057;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: var(--spacing-sm);
         }
         
         .instructions ul {
-            padding-left: 20px;
+            padding-left: var(--spacing-lg);
             color: #6c757d;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 10px;
+            gap: var(--spacing-md);
         }
         
         .instructions li {
-            margin-bottom: 8px;
+            margin-bottom: var(--spacing-sm);
         }
         
         footer {
             text-align: center;
-            margin-top: 20px;
+            margin-top: var(--spacing-lg);
             color: #6c757d;
             font-size: 0.9rem;
+            padding: var(--spacing-md);
         }
         
         /* Transformation controls */
         .transform-controls {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
         }
         
         .transform-input {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: var(--spacing-xs);
         }
         
         .transform-input label {
@@ -306,7 +332,7 @@
         }
         
         .transform-input input {
-            padding: 8px;
+            padding: var(--spacing-sm);
             border: 1px solid #dee2e6;
             border-radius: 4px;
         }
@@ -330,7 +356,7 @@
             }
             
             .drawing-area {
-                height: 500px;
+                height: 1000px;
             }
             
             .instructions ul {
@@ -341,7 +367,7 @@
                 position: relative;
                 top: 0;
                 right: 0;
-                margin-top: 10px;
+                margin-top: var(--spacing-md);
             }
         }
         
@@ -358,12 +384,12 @@
         /* Toast notification */
         .toast {
             position: fixed;
-            bottom: 20px;
+            bottom: var(--spacing-lg);
             left: 50%;
             transform: translateX(-50%);
             background-color: #333;
             color: white;
-            padding: 12px 20px;
+            padding: var(--spacing-sm) var(--spacing-md);
             border-radius: 6px;
             opacity: 0;
             transition: opacity 0.3s;
@@ -390,7 +416,7 @@
         
         .modal-content {
             background-color: white;
-            padding: 30px;
+            padding: var(--spacing-xl);
             border-radius: 12px;
             max-width: 600px;
             width: 90%;
@@ -402,7 +428,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: var(--spacing-lg);
         }
         
         .close-btn {
@@ -418,9 +444,38 @@
             justify-content: center;
             align-items: center;
             height: 60px;
-            margin-top: 10px;
+            margin-top: var(--spacing-sm);
             border: 1px dashed #dee2e6;
             border-radius: 6px;
+        }
+        
+        /* Additional tools section */
+        .additional-tools {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .tool-btn {
+            padding: var(--spacing-sm);
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .tool-btn:hover {
+            background-color: #f1f3f5;
+        }
+        
+        .tool-btn.active {
+            background-color: #4b6cb7;
+            color: white;
+            border-color: #3a5a9b;
         }
     </style>
 </head>
@@ -431,6 +486,37 @@
             <p class="subtitle">Create and manipulate vector shapes with precision</p>
             <div class="designer-name">Designed by Priyanshu Gupta</div>
         </header>
+        
+        <div class="drawing-section">
+                <div class="drawing-header">
+                    <div class="coordinates">X: 0, Y: 0</div>
+                    <div class="drawing-mode">Current Tool: Rectangle</div>
+                </div>
+                
+                
+            </div>
+        
+        <div class="drawing-area-container">
+                    <div class="additional-tools">
+                        <button class="tool-btn" id="zoom-in" title="Zoom In">
+                            <i class="fas fa-search-plus"></i>
+                        </button>
+                        <button class="tool-btn" id="zoom-out" title="Zoom Out">
+                            <i class="fas fa-search-minus"></i>
+                        </button>
+                        <button class="tool-btn" id="reset-view" title="Reset View">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        <button class="tool-btn active" id="snap-to-grid" title="Snap to Grid">
+                            <i class="fas fa-magnet"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="drawing-area">
+                        <svg id="svg-canvas"></svg>
+                        <div class="grid-overlay"></div>
+                    </div>
+                </div>
         
         <div class="main-content">
             <div class="toolbar">
@@ -467,6 +553,8 @@
                     </div>
                 </div>
                 
+                
+                
                 <div class="tool-group">
                     <h3><i class="fas fa-paint-brush"></i> Styles</h3>
                     <div class="color-picker">
@@ -480,19 +568,19 @@
                         </div>
                     </div>
                     
-                    <div style="margin-top: 15px;">
+                    <div style="margin-top: var(--spacing-md);">
                         <label>Stroke Width:</label>
                         <input type="range" id="stroke-width" min="1" max="10" value="2">
                         <div class="value-display" id="width-value">2px</div>
                     </div>
                     
-                    <div style="margin-top: 15px;">
+                    <div style="margin-top: var(--spacing-md);">
                         <label>Opacity:</label>
                         <input type="range" id="opacity" min="0.1" max="1" step="0.1" value="1">
                         <div class="value-display" id="opacity-value">100%</div>
                     </div>
                     
-                    <div style="margin-top: 15px;">
+                    <div style="margin-top: var(--spacing-md);">
                         <label>Dash Array:</label>
                         <input type="range" id="dash-array" min="0" max="20" value="0">
                         <div class="value-display" id="dash-value">Solid</div>
@@ -545,17 +633,9 @@
                 </div>
             </div>
             
-            <div class="drawing-container">
-                <div class="drawing-header">
-                    <div class="coordinates">X: 0, Y: 0</div>
-                    <div class="drawing-mode">Current Tool: Rectangle</div>
-                </div>
+            
                 
-                <div class="drawing-area">
-                    <svg id="svg-canvas"></svg>
-                    <div class="grid-overlay"></div>
-                </div>
-            </div>
+            
         </div>
         
         <div class="instructions">
@@ -622,6 +702,10 @@
             const helpModal = document.getElementById('help-modal');
             const closeBtn = document.querySelector('.close-btn');
             const previewSvg = document.getElementById('preview-svg');
+            const zoomInBtn = document.getElementById('zoom-in');
+            const zoomOutBtn = document.getElementById('zoom-out');
+            const resetViewBtn = document.getElementById('reset-view');
+            const snapToGridBtn = document.getElementById('snap-to-grid');
             
             // Transformation controls
             const rotation = document.getElementById('rotation');
@@ -640,6 +724,13 @@
             let currentPolygon = null;
             let history = [];
             let historyIndex = -1;
+            let zoomLevel = 1;
+            let snapToGrid = true;
+            let canvasTransform = {
+                x: 0,
+                y: 0,
+                scale: 1
+            };
             
             // Initialize canvas
             setCanvasSize();
@@ -660,6 +751,36 @@
                     }
                 });
             });
+            
+            // Toggle snap to grid
+            snapToGridBtn.addEventListener('click', function() {
+                snapToGrid = !snapToGrid;
+                this.classList.toggle('active', snapToGrid);
+                showToast(snapToGrid ? "Snap to grid enabled" : "Snap to grid disabled");
+            });
+            
+            // Zoom functionality
+            zoomInBtn.addEventListener('click', function() {
+                zoomLevel = Math.min(zoomLevel + 0.1, 3);
+                updateCanvasZoom();
+            });
+            
+            zoomOutBtn.addEventListener('click', function() {
+                zoomLevel = Math.max(zoomLevel - 0.1, 0.5);
+                updateCanvasZoom();
+            });
+            
+            resetViewBtn.addEventListener('click', function() {
+                zoomLevel = 1;
+                canvasTransform.x = 0;
+                canvasTransform.y = 0;
+                updateCanvasZoom();
+            });
+            
+            function updateCanvasZoom() {
+                canvas.style.transform = `scale(${zoomLevel})`;
+                showToast(`Zoom: ${Math.round(zoomLevel * 100)}%`);
+            }
             
             // Update stroke width display
             strokeWidth.addEventListener('input', function() {
@@ -858,8 +979,18 @@
             // Handle mouse movement for coordinates and drawing
             function handleMouseMove(e) {
                 const rect = canvas.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+                let x = e.clientX - rect.left;
+                let y = e.clientY - rect.top;
+                
+                // Apply zoom transformation
+                x = x / zoomLevel;
+                y = y / zoomLevel;
+                
+                // Snap to grid if enabled
+                if (snapToGrid) {
+                    x = Math.round(x / 8) * 8;
+                    y = Math.round(y / 8) * 8;
+                }
                 
                 // Update coordinates display
                 coordinates.textContent = `X: ${Math.round(x)}, Y: ${Math.round(y)}`;
@@ -999,8 +1130,21 @@
                 
                 isDrawing = true;
                 const rect = canvas.getBoundingClientRect();
-                startX = e.clientX - rect.left;
-                startY = e.clientY - rect.top;
+                let x = e.clientX - rect.left;
+                let y = e.clientY - rect.top;
+                
+                // Apply zoom transformation
+                x = x / zoomLevel;
+                y = y / zoomLevel;
+                
+                // Snap to grid if enabled
+                if (snapToGrid) {
+                    x = Math.round(x / 8) * 8;
+                    y = Math.round(y / 8) * 8;
+                }
+                
+                startX = x;
+                startY = y;
                 
                 if (currentShape === 'polygon') {
                     if (!currentPolygon) {
@@ -1034,19 +1178,29 @@
                 if (!isDrawing) return;
                 
                 const rect = canvas.getBoundingClientRect();
-                const currentX = e.clientX - rect.left;
-                const currentY = e.clientY - rect.top;
+                let x = e.clientX - rect.left;
+                let y = e.clientY - rect.top;
+                
+                // Apply zoom transformation
+                x = x / zoomLevel;
+                y = y / zoomLevel;
+                
+                // Snap to grid if enabled
+                if (snapToGrid) {
+                    x = Math.round(x / 8) * 8;
+                    y = Math.round(y / 8) * 8;
+                }
                 
                 if (currentShape === 'polygon') {
                     // For polygon, we just update the last point temporarily
                     if (currentPolygon && currentPolygon.points.length > 0) {
                         const tempPoints = [...currentPolygon.points];
-                        tempPoints.push([currentX, currentY]);
+                        tempPoints.push([x, y]);
                         updatePolygonPoints({points: tempPoints, element: currentPolygon.element});
                     }
                 } else {
                     // Update the shape based on mouse position
-                    updateShape(currentElement, currentX, currentY);
+                    updateShape(currentElement, x, y);
                 }
             }
             
